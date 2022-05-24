@@ -37,6 +37,8 @@
         crossorigin="anonymous"></script>
 
 
+
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -51,13 +53,14 @@
                     <form method="post" class="modal_form">
                         <div class="form-group">
                             <label for="name">Ваш телефон</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="+7(888)-56-99"
+                            <input type="tel" class="form-control" id="telephone" name="telephone" placeholder="+7(888)-56-99"
                                 required />
                         </div>
 
 
+
                         <div class="form-group">
-                            <select class="form-select" aria-label="Default select example" required>
+                            <select class="form-select" aria-label="Default select example" id="plastic" required>
                                 <option selected disabled>Тип пластика</option>
                                 <option value="1">PLA</option>
                                 <option value="2">ABS</option>
@@ -66,11 +69,13 @@
                         </div>
 
 
+
                         <div class="form-group">
                             <label for="height">Высота модели в см</label>
                             <input type="number" class="form-control" id="height" name="height" placeholder="14" min="1"
                                 max="30" />
                         </div>
+
 
 
                         <div class="form-group">
@@ -81,7 +86,7 @@
                         </div>
 
 
-                        <input type="submit" class="btn btn-primary"></button>
+                        <input type="submit" class="btn btn-primary">
                         <button type="reset" class="btn ">Сбросить поля</button>
                     </form>
                 </div>
@@ -90,17 +95,50 @@
     </div>
 
     <footer class="page-footer font-small blue">
+
+
         <footer class="page-footer font-small blue fixed-bottom">
 
 
             <div class="footer-copyright text-center py-3 bg-warning"> Короткова Арина Константинована, 201-323. Вариант
                 4 - 3Д
+
             </div>
 
 
         </footer>
 
+    </footer>
 
 </body>
 
+
+<script>
+    let form = document.forms[0];
+  
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+  
+      let forma = {
+        telephone: document.getElementById('telephone').value,
+        height: document.getElementById('height').value,
+        plastic: document.getElementById('plastic').value,
+        urgently: document.getElementById('urgently').checked,
+      };
+  
+      fetch('send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(forma)
+            })
+      .then(r => r.json())
+      .then(json => {
+        console.table(json);
+      })
+      .catch(error => alert("Ошибка", error));
+    });
+  
+  </script>
 </html>
